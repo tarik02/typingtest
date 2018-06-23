@@ -220,8 +220,10 @@ void update() {
 				}
 				break;
 			default:
-				c = tt_char_lower(c);
-				if (!c) break;
+				if (c != '\'') {
+					c = tt_char_lower(c);
+					if (!c) break;
+				}
 
 				if (state == TT_STATE_IDLE) {
 					game_start();
@@ -236,7 +238,7 @@ void update() {
 					str_add_c(back_word_wrong, c);
 					beep();
 				} else {
-					if (str_data(current_word)[cc] == c) {
+					if (str_data(current_word)[cc] == c && cc + 1 <= str_length(current_word)) {
 						str_add_c(back_word, c);
 					} else {
 						str_add_c(back_word_wrong, c);
