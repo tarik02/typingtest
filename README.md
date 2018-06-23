@@ -1,6 +1,8 @@
 # Typing speed test
 Test your typing speed!
 
+![Screenshot](/.github/assets/screenshot.png?raw=true "Screenshot")
+
 ## Dependencies
  - ncursesw (`# apt-get install libncursesw5-dev`)
 
