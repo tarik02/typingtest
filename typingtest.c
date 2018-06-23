@@ -12,7 +12,7 @@
 #include <string.h>
 #include <assert.h>
 #include <locale.h>
-#include <ncurses.h>
+#include <ncursesw/ncurses.h>
 
 #if defined(TT_UNIX)
 #include <pthread.h>
