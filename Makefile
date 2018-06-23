@@ -21,7 +21,7 @@ clean:
 install:
 	install $(TARGET) $(PREFIX)/bin
 uninstall:
-	rm -f $(PREFIX)/bin/$(TARGEgT)
+	rm -f $(PREFIX)/bin/$(TARGET)
 
 
 $(TARGET): $(BUILD_DIR)/$(TARGET)
