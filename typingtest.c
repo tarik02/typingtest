@@ -108,6 +108,12 @@ void clear_typed_words() {
 	list_clear(typed_words);
 }
 
+WINDOW *tt_create_window() {
+	WINDOW *win = newwin(0, 0, 0, 0);
+	wbkgd(win, COLOR_PAIR(TT_COLOR_PAIR_TITLE));
+	return win;
+}
+
 void game_start() {
 	state = TT_STATE_PLAY;
 	state_changed = old_time;
@@ -129,13 +135,13 @@ void game_stop() {
 	take_next_word();
 
 	if (win_end) delwin(win_end);
-	win_end = newwin(0, 0, 0, 0);
+	win_end = tt_create_window();
 }
 
 void tt_begin() {
-	win_title = newwin(0, 0, 0, 0);
-	win_text = newwin(0, 0, 0, 0);
-	win_stats = newwin(0, 0, 0, 0);
+	win_title = tt_create_window();
+	win_text = tt_create_window();
+	win_stats = tt_create_window();
 
 	srand(tt_time());
 
@@ -193,7 +199,7 @@ void update() {
 	}
 
 	int c = 0;
-	while ((c = getch()) != ERR) {
+	while ((c = getch()) != ERR && c != 0) {
 		switch (state) {
 		case TT_STATE_IDLE:
 		case TT_STATE_PLAY:
@@ -248,15 +254,17 @@ void update() {
 			}
 			break;
 		case TT_STATE_END:
-			if ((3 + 1) - (time - state_changed) <= 0) {
-				state = TT_STATE_IDLE;
-				state_changed = time;
+			if (c == ' ') {
+				if ((3 + 1) - (time - state_changed) <= 0) {
+					state = TT_STATE_IDLE;
+					state_changed = time;
 
-				if (win_end) {
-					delwin(win_end);
-					win_end = NULL;
+					if (win_end) {
+						delwin(win_end);
+						win_end = NULL;
+					}
+					full_redraw = true;
 				}
-				full_redraw = true;
 			}
 			break;
 		}
@@ -322,7 +330,7 @@ void update() {
 				rem = 60;
 				break;
 			case TT_STATE_PLAY:
-				rem = (state_changed + 60) - time;
+				rem = (state_changed + 60 - 1) - time;
 				if (rem < 0) {
 					game_stop();
 				}

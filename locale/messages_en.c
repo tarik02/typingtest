@@ -5,7 +5,7 @@ MESSAGE_IMPLEMENT(msg_seconds, "SECONDS");
 MESSAGE_IMPLEMENT(msg_words_per_minute, "WORDS / MIN");
 MESSAGE_IMPLEMENT(msg_chars_per_minute, "CHARS / MIN");
 MESSAGE_IMPLEMENT(msg_percent_accuracy, "% ACCURACY");
-MESSAGE_IMPLEMENT(msg_any_key_continue, "Press any key to continue");
+MESSAGE_IMPLEMENT(msg_any_key_continue, "Press SPACE to continue");
 MESSAGE_IMPLEMENT(msg_wait_seconds, "Wait %d seconds...");
 
 MESSAGE_IMPLEMENT(msg_conc_1_message1, "You're a Turtle.");

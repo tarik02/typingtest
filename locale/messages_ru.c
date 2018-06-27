@@ -5,7 +5,7 @@ MESSAGE_IMPLEMENT(msg_seconds, "СЕКУНДЫ");
 MESSAGE_IMPLEMENT(msg_words_per_minute, "СЛОВА / МИН");
 MESSAGE_IMPLEMENT(msg_chars_per_minute, "СИМВОЛЫ / МИН");
 MESSAGE_IMPLEMENT(msg_percent_accuracy, "% ТОЧНОСТЬ");
-MESSAGE_IMPLEMENT(msg_any_key_continue, "Нажмите любую клавишу, чтобы продолжить");
+MESSAGE_IMPLEMENT(msg_any_key_continue, "Нажмите ПРОБЕЛ, чтобы продолжить");
 MESSAGE_IMPLEMENT(msg_wait_seconds, "Подождите %d секунд...");
 
 MESSAGE_IMPLEMENT(msg_conc_1_message1, "Вы - Черепаха.");
