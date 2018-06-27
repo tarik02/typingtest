@@ -175,7 +175,7 @@ void tt_end() {
 	delwin(win_title);
 }
 
-void update() {
+void tt_update() {
 	tt_sleep(1);
 	curs_set(0);
 
@@ -558,7 +558,7 @@ int main() {
 
 	tt_begin();
 	while (!should_exit) {
-		update();
+		tt_update();
 	}
 	tt_end();
 
