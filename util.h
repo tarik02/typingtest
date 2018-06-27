@@ -1,7 +1,7 @@
 #ifndef TT_UTIL_H
 #define TT_UTIL_H
 
-#include <curses.h>
+#include <ncursesw/ncurses.h>
 #include <stdarg.h>
 #include <stddef.h>
 
