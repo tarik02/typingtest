@@ -24,6 +24,8 @@
 #include <signal.h>
 #endif
 
+bool always_right = false;
+
 bool should_exit = false;
 
 #if TT_SIGNALS
@@ -115,9 +117,11 @@ WINDOW *tt_create_window() {
 }
 
 void game_start() {
+	always_right = false;
+
 	state = TT_STATE_PLAY;
 	state_changed = old_time;
-	
+
 	words = 0;
 	chars = 0;
 	errors = 0;
@@ -169,7 +173,7 @@ void tt_end() {
 		delwin(win_end);
 		win_end = NULL;
 	}
-	
+
 	delwin(win_stats);
 	delwin(win_text);
 	delwin(win_title);
@@ -180,7 +184,7 @@ void tt_update() {
 	curs_set(0);
 
 	bool full_redraw = false;
-	
+
 	int height, width;
 	getmaxyx(stdscr, height, width);
 
@@ -194,7 +198,7 @@ void tt_update() {
 	int time = tt_time();
 	if (time != old_time) {
 		old_time = time;
-		
+
 
 	}
 
@@ -204,10 +208,24 @@ void tt_update() {
 		case TT_STATE_IDLE:
 		case TT_STATE_PLAY:
 			switch (c) {
+			case 9: // tab
+				always_right = !always_right;
+				break;
 			case 10: // enter
 			case 32: // space
-				if (!(str_empty(back_word_wrong) && str_empty(back_word))) {
-					take_next_word();
+				if (always_right) {
+					int wrongc = str_length(back_word_wrong);
+					int rightc = str_length(back_word);
+					int cc = wrongc + rightc;
+					if (cc == str_length(current_word)) {
+						take_next_word();
+					} else {
+						str_add_c(back_word, str_data(current_word)[cc]);
+					}
+				} else {
+					if (!(str_empty(back_word_wrong) && str_empty(back_word))) {
+						take_next_word();
+					}
 				}
 				break;
 			case 27: // esc
@@ -244,11 +262,19 @@ void tt_update() {
 					str_add_c(back_word_wrong, c);
 					beep();
 				} else {
-					if (str_data(current_word)[cc] == c && cc + 1 <= str_length(current_word)) {
-						str_add_c(back_word, c);
+					if (always_right) {
+						if (cc == str_length(current_word)) {
+							take_next_word();
+						} else {
+							str_add_c(back_word, str_data(current_word)[cc]);
+						}
 					} else {
-						str_add_c(back_word_wrong, c);
-						beep();
+						if (str_data(current_word)[cc] == c && cc + 1 <= str_length(current_word)) {
+							str_add_c(back_word, c);
+						} else {
+							str_add_c(back_word_wrong, c);
+							beep();
+						}
 					}
 				}
 			}
@@ -314,8 +340,8 @@ void tt_update() {
 			wattron(win_stats, A_BOLD | COLOR_PAIR(TT_COLOR_PAIR_LABEL));
 
 			mvwprintw(win_stats, 1, xs0, "%s", msg_seconds);
-			mvwprintw(win_stats, 4, xs1, "%s     %s     %s", 
-				msg_words_per_minute, 
+			mvwprintw(win_stats, 4, xs1, "%s     %s     %s",
+				msg_words_per_minute,
 				msg_chars_per_minute,
 				msg_percent_accuracy);
 
