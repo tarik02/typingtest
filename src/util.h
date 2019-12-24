@@ -1,7 +1,12 @@
 #ifndef TT_UTIL_H
 #define TT_UTIL_H
 
-#include <ncursesw/ncurses.h>
+#ifdef __APPLE__
+# include <ncurses.h>
+#else
+# include <ncursesw/ncurses.h>
+#endif
+
 #include <stdarg.h>
 #include <stddef.h>
 

@@ -4,18 +4,19 @@ Test your typing speed!
 ![Screenshot](/.github/assets/screenshot.png?raw=true "Screenshot")
 
 ## Dependencies
- - ncursesw (`# apt-get install libncursesw5-dev`)
+ - Linux: ncursesw (`# apt-get install libncursesw5-dev`)
+ - macOS: ncurses (`$ brew install ncurses`)
 
 ## Building
 ```
-$ make
+$ mkdir build
+$ cd build
+$ cmake [-DLOCALE=en/ru/uk] ..
+$ cmake --build .
 ```
 or
-```
-$ make LOCALE=<your locale>
-```
 List of available locales:
- - en (English, default one)
+ - en (English, default)
  - ru (Russian)
  - uk (Ukrainian)
 
@@ -26,11 +27,7 @@ $ ./typingtest
 ```
 
 ### Installing
-Optionally you can install typingtest systemwide:
+Optionally you can install typingtest system-wide:
 ```
-# make install
-```
-or to specified prefix:
-```
-$ make install PREFIX=<your prefix>
+# cmake --build . --target install
 ```

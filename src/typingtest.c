@@ -12,7 +12,6 @@
 #include <string.h>
 #include <assert.h>
 #include <locale.h>
-#include <ncursesw/ncurses.h>
 
 #if defined(TT_UNIX)
 #include <pthread.h>
@@ -233,6 +232,7 @@ void tt_update() {
 					game_stop();
 				}
 				break;
+			case 127: // macOS backspace
 			case 263: // backspace
 			case 330: // delete
 				if (str_length(back_word_wrong)) {
