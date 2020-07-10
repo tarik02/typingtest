@@ -17,9 +17,16 @@ add_executable(typingtest
 	src/words.c
 )
 
+IF(NOT WIN32)
+	set(MATH_LIBRARIES m)
+ELSE()
+	set(MATH_LIBRARIES)
+ENDIF()
+
 target_link_libraries(typingtest
 	PRIVATE
 		${CURSES_LIBRARIES}
+		${MATH_LIBRARIES}
 )
 
 target_include_directories(typingtest
